@@ -15,6 +15,9 @@ Création de l'utilisateur pour la réplication
 
 Génération des certificats SSL
 
+	mkdir /etc/mysql/ssl/
+	cd /etc/mysql/ssl/
+	
 	# Generate a CA key and certificate with SHA1 digest
 	openssl genrsa 2048 > ca-key.pem
 	openssl req -sha1 -new -x509 -nodes -days 3650 -key ca-key.pem > ca-cert.pem
@@ -37,9 +40,9 @@ Modification de la configuration de MySQL pour la prise en compte des certificat
 
 Dans la partie **[mysqld]** ajouter :
 
-	ssl-ca=/etc/mysql/ca-cert.pem
-	ssl-cert=/etc/mysql/server-cert.pem
-	ssl-key=/etc/mysql/server-key.pem
+	ssl-ca=/etc/mysql/ssl/ca-cert.pem
+	ssl-cert=/etc/mysql/ssl/server-cert.pem
+	ssl-key=/etc/mysql/ssl/server-key.pem
 
 On redémarre le service MySQL
 
@@ -57,11 +60,11 @@ On devrait avoir
 
 > **have_openssl** : YES
 > **have_ssl** : YES
-> **ssl_ca** : /etc/mysql/ca-cert.pem
+> **ssl_ca** : /etc/mysql/ssl/ca-cert.pem
 > **ssl_capath** :
-> **ssl_cert** : /etc/mysql/server-cert.pem
+> **ssl_cert** : /etc/mysql/ssl/server-cert.pem
 > **ssl_cipher** :
-> **ssl_key** : /etc/mysql/server-key.pem
+> **ssl_key** : /etc/mysql/ssl/server-key.pem
 
 
 ## Serveur esclave
